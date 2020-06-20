@@ -1,5 +1,12 @@
+/* Zombie font family import */
+@font-face {
+    font-family: corpse;
+    src: url("assets/exquisiteCorpse.ttf") format("opentype");
+}
+
 body{
     background-color: rgb(0,0,0,.5); 
+    background-image: url("/assets/FinalBossHell.jpg");
 }
 
 .container{
@@ -16,6 +23,11 @@ body{
     float: right;
     text-align: center;
     margin-right: 100px;
+}
+
+h1{
+    font-family: corpse;
+    font-size: 75px;
 }
 
 button {
