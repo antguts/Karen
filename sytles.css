@@ -4,12 +4,12 @@
     src: url("assets/exquisiteCorpse.ttf") format("opentype");
 }
 
-body{
+body {
     background-color: rgb(0,0,0,.5); 
     background-image: url("/assets/umbrellaCorp.jpg");
 }
 
-.container{
+.container {
     display: inline-block;
     border: 10px inset grey;
     margin-left: 50px;
@@ -20,7 +20,7 @@ body{
     /* opacity: 80%; */
 }
 
-.gameInfo{
+.gameInfo {
     border: 4px dotted black;
     border-radius: 105px 105px 0 0;
     background-color: grey;
@@ -32,7 +32,7 @@ body{
     text-align: center;
 }
 
-h1{
+h1 {
     font-family: corpse;
     font-size: 75px;
 }
@@ -47,7 +47,7 @@ button {
     height: 50px;
 }
 
-audio{
+audio {
     color: black;
     margin-top: 20px;
     width: 200px;
@@ -61,6 +61,14 @@ audio{
     opacity: 5%;
 }
 
-.karen{
-    
+#karen {
+    position: absolute;
+    top:200px;
+    margin-left: 100px;
+    width: 185px;
+    /* Flips the image. first argument to flip horizontally */
+    -moz-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    transform: scale(-1, 1);
 }
