@@ -58,14 +58,14 @@ audio {
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: 5%;
+    opacity: 50%;
 }
 
-#karen {
+.karen {
     position: absolute;
     top:200px;
-    margin-left: 100px;
-    width: 185px;
+    /* margin-left: 60px; */
+    /* width: 125px; */
     /* Flips the image. first argument to flip horizontally */
     -moz-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);

@@ -3,29 +3,27 @@ let audioDiv=document.querySelector('.audio')
 let audioTag=document.querySelector('audio')
 
 window.onload = (event) => {
-    //Alert message to ask it the user wants music. 
-    if(confirm("would you like music?")){
+    
+    let startBtn=document.querySelector('button')
         audioDiv.innerHTML=`<audio controls loop autoplay> 
         <source src="assets/sounds/menuScreen2.mp3" type="audio/mpeg">
         </audio>`
-        document.querySelector('button').onclick = () =>{
+        startBtn.onclick = () =>{
+            populateKarens()      
             audioDiv.innerHTML=`<audio controls loop autoplay><source src="assets/sounds/zombieWav.mp3" 
             type="audio/mpeg"></audio>`
-            // audioTag.volume=0.6
-        }
-    }//end if
+        } 
 };
 
 
 
-
-
 //KARENS=======================================================================================
-class Karen={
-  y:200, //Same TOP CSS position for all. 
-  hp:5, //Hit Points for each Karen
+class Karen {
     constructor(x,img){
-        this.x=x //To be determined by random assign
+        this.x=x //To be determined by random assign. Between 60-517
+        this.y=200, //Same TOP CSS position for all.
+        this.width=75, 
+        this.hp=5, //Hit Points for each Karen
         this.img=img //Image for Karen
     }
 }//end Karen class
@@ -37,22 +35,37 @@ let bossKaren={
     hp: 25
 }//end boss Karen
 
+
+let currentKarens=0
 let karens=[]
 function populateKarens(){
-    //15 Karens
-    for(i=0;i<15;i++){
-        let ranIm='zom'+Math.floor((Math.random()*4)+1)+'.png'
-
-        new Karen = karen()
-        karens.push()
+    //10 Karens...
+    for(i=0;i<10;i++){
+        let kar=document.querySelector('.container')
+        let ranIm='zom'+Math.floor((Math.random()*2)+1)+'.png'
+        let ranX=Math.floor((Math.random()*635)+20)
+        let karen=new Karen(ranX,ranIm)
+        karens.push(karen)
+        kar.innerHTML+=`<img src="/assets/${ranIm}" class="karen" id="karen${i}" style="width:105px; margin-left:${ranX}px;" onclick='karenShot(this)'>`
+        console.log(ranX)
+        // let kar = new Karen(ranX,ranIm)
+        // karens.push(kar)
     }
+}//end funct
+
+//Function to shoot and eliminate Karens
+function karenShot(element){
+    new Audio('/assets/sounds/shot.wav').play();
+    console.log("clicked")
+    element.style.display='none'
 }
 
 
+//ANIMATION=========================================================================================
 
-let karenId=document.querySelector('#karen')
-//Adds MM shooting sound when Karen is hit.
-karenId.addEventListener('click',function(){
-    new Audio('/assets/sounds/shot.wav').play();
-    console.log("clicked")
-})
+
+
+function animate(){
+    populateKarens()
+}
+
