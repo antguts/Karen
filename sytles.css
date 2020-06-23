@@ -37,6 +37,19 @@ h1 {
     font-size: 75px;
 }
 
+h2 {
+    position: absolute;
+    top: 5px;
+    color: red;
+    font-family: corpse;
+    font-size: 75px;
+    padding: 15px 45px 15px 15px;
+    margin-top: 15px;
+    border-radius: 0 105px 105px 0;
+    background-color: black;
+    opacity: 0;
+}
+
 h3 {
     /* font-family: corpse; */
     font-size: 35px;
@@ -44,6 +57,15 @@ h3 {
     position: absolute;
     color:white;
     top:200px;
+    opacity: 0;
+}
+
+p {
+    font-size: 20px;
+    margin-left: 350px;
+    position: absolute;
+    color:red;
+    top:280px;
     opacity: 0;
 }
 
@@ -80,3 +102,37 @@ audio {
     -webkit-transform: scale(-1, 1);
     transform: scale(-1, 1);
 }
+
+.karenBoss {
+    content:"";
+    display: grid;
+    position: absolute;
+    background-image: url('/assets/finalKaren.png');
+    top: 70px;
+    width: 250px; 
+    height: 300px;
+    background-size: 250px 300px;
+    /* margin-left: 150px; */
+    left: 350px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+/* Create divs inside boss karen for user to target eyes instead of entire div */
+.leftEye {
+    position: inherit;
+    right: 50%;
+    top: 142px;
+    width: 50px; 
+    height: 50px;
+
+}
+.rightEye {
+    position: inherit;
+    right: 28%;
+    top: 142px;
+    width: 50px; 
+    height: 50px;
+    /* margin: 142px 0 0 128px; */
+}
+
