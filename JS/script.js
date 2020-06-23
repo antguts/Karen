@@ -6,18 +6,18 @@ const audioTag=document.querySelector('audio')
 const karens=[]
 
 //AUDIO ELEMENTS===========================================================================
-let vol= () =>{document.querySelector('audio').volume=0.4}
+let vol= (file) =>{
+    audioDiv.innerHTML=`<audio controls loop autoplay> 
+        <source src="${file}" type="audio/mpeg">
+        </audio>`
+    document.querySelector('audio').volume=0.4;
+}
 
-audioDiv.innerHTML=`<audio controls loop autoplay> 
-<source src="assets/sounds/menuScreen2.mp3" type="audio/mpeg">
-</audio>`
-vol()
+vol('/assets/sounds/menuScreen2.mp3')
 startBtn.onclick = () =>{
     populateKarens()
     animate()
-    audioDiv.innerHTML=`<audio controls loop autoplay><source src="assets/sounds/zombieWav.mp3" 
-    type="audio/mpeg"></audio>`
-    vol()
+    vol("assets/sounds/zombieWav.mp3")
 } 
     
 
@@ -71,7 +71,7 @@ function karenShot(element){
     }
 }//end karen shot
 
-let bossCnt=0
+// let bossCnt=0
 function bossShot(element){
     new Audio('/assets/sounds/shot.wav').play();
     let karen=document.querySelector('.karenBoss')
@@ -108,7 +108,6 @@ function levelChange(){
     container.innerHTML+=`<div class="karenBoss"><div class="leftEye" onclick='bossShot(this)'></div><div class="rightEye"  onclick='bossShot(this)'></div>"</div>`
     transitionBg()
     bossCount()
-    
 }
 
 function bossCount(){
@@ -116,9 +115,11 @@ function bossCount(){
         var Cont={val:0} , NewVal = bossKaren.hp ;
         gsap.to('h2',{opacity: 1, duration: 40})
         gsap.to(Cont,1,{delay:20,val:NewVal,roundProps:"val",onUpdate:function(){
-        document.getElementById("lifeCnt").innerHTML=Cont.val
-    }});
-        tl.set(audioDiv,{delay: 17,innerHTML:`<audio controls autoplay volume="0.04"><source src="assets/sounds/finalBoss.mp3" type="audio/mpeg"></audio>`},volume="0.4")
+            document.getElementById("lifeCnt").innerHTML=Cont.val
+        }});
+
+        //Delays the song change until appropriate time
+        TweenMax.delayedCall(17,vol,['assets/sounds/finalBoss.mp3'])
 }
 
 
@@ -136,7 +137,6 @@ function transitionBg(){
       .to('.karenBoss',{opacity: 0, duration: 0.1})
       .to('.karenBoss',{opacity: 1, duration: 0.2})
       .to('.karenBoss',{opacity: 0, duration: 0.1})
-      .to('.karenBoss',{opacity: 1, duration: 0.2})
-      
+      .to('.karenBoss',{opacity: 1, duration: 0.2});
 }
 
