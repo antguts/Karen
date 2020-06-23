@@ -6,6 +6,7 @@ const audioTag=document.querySelector('audio')
 const karens=[]
 
 //AUDIO ELEMENTS===========================================================================
+//function to reset innerHTML of audio
 let vol= (file) =>{
     audioDiv.innerHTML=`<audio controls loop autoplay> 
         <source src="${file}" type="audio/mpeg">
@@ -13,8 +14,11 @@ let vol= (file) =>{
     document.querySelector('audio').volume=0.4;
 }
 
+
 vol('/assets/sounds/menuScreen2.mp3')
+
 startBtn.onclick = () =>{
+    document.querySelector('button').disabled=true
     populateKarens()
     animate()
     vol("assets/sounds/zombieWav.mp3")
@@ -36,14 +40,14 @@ class Karen {
 
 let bossKaren={
     img: '/assets/finalKaren.png',
-    hp: 30
+    hp: 3
 }//end boss Karen
 
 
 
 function populateKarens(){
     //10 Karens...
-    for(i=0;i<3;i++){
+    for(i=0;i<1;i++){
         let ranIm='zom'+Math.floor((Math.random()*2)+1)+'.png'
         let ranX=Math.floor((Math.random()*635)+10)
         let ranWidth=Math.floor((Math.random()*50)+135)
@@ -82,7 +86,7 @@ function bossShot(element){
     bossKaren.hp--
     document.getElementById("lifeCnt").innerHTML=bossKaren.hp
     
-    // if(bossKaren.hp<1) 
+    if(bossKaren.hp<1) bossDeath()
 }
 
 
@@ -106,10 +110,12 @@ function animate(){
 function levelChange(){
     container.innerHTML+=`<h3>The park darkens as you hear a loud shriek....</h3><p>(Go for the eyes)</p>`
     container.innerHTML+=`<div class="karenBoss"><div class="leftEye" onclick='bossShot(this)'></div><div class="rightEye"  onclick='bossShot(this)'></div>"</div>`
-    transitionBg()
-    bossCount()
+    // transitionBg()
+    // bossCount()
+    gsap.to('.karenBoss',{opacity: 1, duration: 0.2})
 }
 
+//function that fills HP meter on screen and delays boss appearance
 function bossCount(){
         var tl=gsap.timeline({defaults:{duration: 1}})
         var Cont={val:0} , NewVal = bossKaren.hp ;
@@ -120,9 +126,10 @@ function bossCount(){
 
         //Delays the song change until appropriate time
         TweenMax.delayedCall(17,vol,['assets/sounds/finalBoss.mp3'])
+        if(bossKaren.hp<1) bossDeath()
 }
 
-
+//Function that transitions to final boss
 function transitionBg(){
     var tl=gsap.timeline({defaults:{duration: 1}})
     tl.to('.square',{opacity: 1, duration: 5})
@@ -138,5 +145,17 @@ function transitionBg(){
       .to('.karenBoss',{opacity: 1, duration: 0.2})
       .to('.karenBoss',{opacity: 0, duration: 0.1})
       .to('.karenBoss',{opacity: 1, duration: 0.2});
-}
+}//end funct
 
+function bossDeath(){
+    // let karen=document.querySelector('.bossKaren')
+    gsap.to('.karenBoss',3,{rotation:2000})
+    gsap.to('.karenBoss',4,{opacity: 0})
+    gsap.to('.karenBoss',4,{backgroundSize:0})
+    gsap.to('.square',4,{backgroundImage:'url(assets/victoryPark.png)'})
+    gsap.to('.square',4,{opacity:1})
+
+
+    // gsap.to('.karenBoss',3,{top:-300})
+
+}//end funct
