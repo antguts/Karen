@@ -1,16 +1,17 @@
 //GLOBAL VARIABLES==============================================
 const container=document.querySelector('.container')
-const startBtn=document.querySelector('button')
+const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
+const amountKarens=1
 const karens=[]
 
 //AUDIO ELEMENTS===========================================================================
 //function to reset innerHTML of audio
 let vol= (file) =>{
     audioDiv.innerHTML=`<audio controls loop autoplay> 
-        <source src="${file}" type="audio/mpeg">
-        </audio>`
+                        <source src="${file}" type="audio/mpeg">
+                        </audio>`
     document.querySelector('audio').volume=0.4;
 }
 
@@ -21,7 +22,7 @@ startBtn.onclick = () =>{
     document.querySelector('button').disabled=true
     populateKarens()
     animate()
-    vol("assets/sounds/zombieWav.mp3")
+    vol("assets/sounds/zomWave.mp3")
 } 
     
 
@@ -40,14 +41,14 @@ class Karen {
 
 let bossKaren={
     img: '/assets/finalKaren.png',
-    hp: 3
+    hp: 2
 }//end boss Karen
 
 
 
 function populateKarens(){
     //10 Karens...
-    for(i=0;i<1;i++){
+    for(i=0;i<amountKarens;i++){
         let ranIm='zom'+Math.floor((Math.random()*2)+1)+'.png'
         let ranX=Math.floor((Math.random()*635)+10)
         let ranWidth=Math.floor((Math.random()*50)+135)
@@ -61,9 +62,8 @@ let count=0
 function karenShot(element){
     let width=element.width
     // console.log(width)
-    gsap.to(`#${element.id}`,{opacity: 1, width:(width-25)})
     console.log(count)
-    // new Audio('/assets/sounds/shot.wav').play();
+    new Audio('/assets/sounds/shot.wav').play();
     //grab number from id and eliminate the 'karen'
     var currKaren = element.id.match(/\d/g).join('');
     karens[currKaren].hp--
@@ -73,6 +73,7 @@ function karenShot(element){
         element.remove()
         if(count==karens.length) levelChange()
     }
+    gsap.to(`#${element.id}`,{opacity: 1, width:(width-35)})
 }//end karen shot
 
 // let bossCnt=0
@@ -85,8 +86,7 @@ function bossShot(element){
     karen.style.top=ranY
     bossKaren.hp--
     document.getElementById("lifeCnt").innerHTML=bossKaren.hp
-    
-    if(bossKaren.hp<1) bossDeath()
+    if(bossKaren.hp<1) return bossDeath()
 }
 
 
@@ -108,11 +108,11 @@ function animate(){
 
 //gsap animated level change to boss
 function levelChange(){
-    container.innerHTML+=`<h3>The park darkens as you hear a loud shriek....</h3><p>(Go for the eyes)</p>`
+    container.innerHTML+=`<h3>The park darkens as something approaches..</h3><p id="message">(Go for the eyes)</p>`
     container.innerHTML+=`<div class="karenBoss"><div class="leftEye" onclick='bossShot(this)'></div><div class="rightEye"  onclick='bossShot(this)'></div>"</div>`
-    // transitionBg()
-    // bossCount()
-    gsap.to('.karenBoss',{opacity: 1, duration: 0.2})
+    transitionBg()
+    bossCount()
+    // gsap.to('.karenBoss',{opacity: 1, duration: 0.2})
 }
 
 //function that fills HP meter on screen and delays boss appearance
@@ -126,7 +126,7 @@ function bossCount(){
 
         //Delays the song change until appropriate time
         TweenMax.delayedCall(17,vol,['assets/sounds/finalBoss.mp3'])
-        if(bossKaren.hp<1) bossDeath()
+        if(bossKaren.hp<1) return bossDeath()
 }
 
 //Function that transitions to final boss
@@ -149,13 +149,23 @@ function transitionBg(){
 
 function bossDeath(){
     // let karen=document.querySelector('.bossKaren')
+    container.innerHTML+=`<img src='/assets/thumbUp.png' id="arnold">`
+    document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button>`
+
+    new Audio('/assets/sounds/screech.mp3').play();
     gsap.to('.karenBoss',3,{rotation:2000})
     gsap.to('.karenBoss',4,{opacity: 0})
-    gsap.to('.karenBoss',4,{backgroundSize:0})
-    gsap.to('.square',4,{backgroundImage:'url(assets/victoryPark.png)'})
-    gsap.to('.square',4,{opacity:1})
+    let tl= new TimelineMax()
+    tl.to('h2',{display:'none'})  
+      .to('.karenBoss',4,{backgroundSize:0})
+      .to('audio',{duration:3,volume:0},"-=2.5")  
+      .to('.square',2,{opacity:1, backgroundImage:'url(assets/victoryPark.png)'})
+      .add(vol('/assets/sounds/victory.mp3'),"+=3")
+      .to('#arnold',5,{opacity:1})
+      .to('.victoryMessage',{opacity:1},"-=3");
+    //   victory()
 
+}//end funct
 
-    // gsap.to('.karenBoss',3,{top:-300})
-
+function victory(){
 }//end funct
