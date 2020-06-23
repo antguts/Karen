@@ -3,13 +3,15 @@ const container=document.querySelector('.container')
 const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
-const amountKarens=1
+const amountKarens=5
 const karens=[]
+
+
 
 //AUDIO ELEMENTS===========================================================================
 //function to reset innerHTML of audio
 let vol= (file) =>{
-    audioDiv.innerHTML=`<audio controls loop autoplay> 
+    audioDiv.innerHTML=`<audio controls loop autoplay>  
                         <source src="${file}" type="audio/mpeg">
                         </audio>`
     document.querySelector('audio').volume=0.4;
@@ -41,7 +43,7 @@ class Karen {
 
 let bossKaren={
     img: '/assets/finalKaren.png',
-    hp: 2
+    hp: 25
 }//end boss Karen
 
 
@@ -57,7 +59,8 @@ function populateKarens(){
     }
 }//end funct
 
-//Function to shoot and eliminate Karens. Counter used to track the dead instead of array methods to maintain properties.
+//Function to shoot and eliminate Karens. 
+//Counter used to track the dead instead of array methods to maintain properties.
 let count=0
 function karenShot(element){
     let width=element.width
@@ -73,7 +76,10 @@ function karenShot(element){
         element.remove()
         if(count==karens.length) levelChange()
     }
-    gsap.to(`#${element.id}`,{opacity: 1, width:(width-35)})
+    gsap.to(`#${element.id}`,{ width:(width-35)})
+    gsap.to(`#${element.id}`,{ left:(Math.floor((Math.random()*110)+20))})
+        
+    
 }//end karen shot
 
 // let bossCnt=0
@@ -103,7 +109,8 @@ function delay(i) {
 function animate(){
     for(i=0;i<karens.length;i++){
         delay(i)
-    }     
+        // movingKarens(`karen${i}`)
+    }//end for
 }//end animate
 
 //gsap animated level change to boss
@@ -112,7 +119,6 @@ function levelChange(){
     container.innerHTML+=`<div class="karenBoss"><div class="leftEye" onclick='bossShot(this)'></div><div class="rightEye"  onclick='bossShot(this)'></div>"</div>`
     transitionBg()
     bossCount()
-    // gsap.to('.karenBoss',{opacity: 1, duration: 0.2})
 }
 
 //function that fills HP meter on screen and delays boss appearance
@@ -137,8 +143,8 @@ function transitionBg(){
       .to('p',{opacity: 1, duration: 1},"-=2.2")
       .to(".container",{backgroundImage:'url(assets/FinalBossHell.jpg)'})
       .to('h3',{opacity: 0, duration: 5})
-      .to('p',{opacity: 0, duration: 1})
-      .to('audio',{duration:5,volume:0},"-=3.5")
+      .to('p',{opacity: 0, duration: .5},"-=3")
+      .to('audio',{duration:5,volume:0},"-=5.5")
       .to('.square',{opacity: 0, duration: 6},"-=2.2")
       .to('.karenBoss',{opacity: 1, duration: 0.2})
       .to('.karenBoss',{opacity: 0, duration: 0.1})
@@ -150,7 +156,7 @@ function transitionBg(){
 function bossDeath(){
     // let karen=document.querySelector('.bossKaren')
     container.innerHTML+=`<img src='/assets/thumbUp.png' id="arnold">`
-    document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button>`
+    document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button><div class="time"><h4>TIME: <span class="timeTotal">11:11</span></h4></div>`
 
     new Audio('/assets/sounds/screech.mp3').play();
     gsap.to('.karenBoss',3,{rotation:2000})
@@ -167,5 +173,8 @@ function bossDeath(){
 
 }//end funct
 
-function victory(){
+function movingKarens(karen){
+    let tl= new TimelineMax()
+    tl.to(karen,20,{rotation:50})
+    console.log('test')
 }//end funct

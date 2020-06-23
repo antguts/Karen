@@ -9,29 +9,6 @@ body {
     background-image: url("/assets/umbrellaCorp.jpg");
 }
 
-.container {
-    display: inline-block;
-    border: 10px inset grey;
-    margin-left: 50px;
-    height:600px;
-    width: 800px;
-    background-image: url("/assets/parkBG.jpg");
-    background-size: 800px 600px;
-    /* overflow: hidden; */
-    /* opacity: 80%; */
-}
-
-.gameInfo {
-    border: 4px dotted black;
-    border-radius: 105px 105px 0 0;
-    background-color: grey;
-    margin-top: 50px;
-    margin-right: 100px;
-    padding: 0 20px;
-    width: 250px;
-    float: right;
-    text-align: center;
-}
 
 h1 {
     font-family: corpse;
@@ -75,12 +52,49 @@ p {
     opacity: 0;
 }
 
+.container {
+    display: inline-block;
+    border: 10px inset grey;
+    margin-left: 50px;
+    height:600px;
+    width: 800px;
+    background-image: url("/assets/parkBG.jpg");
+    background-size: 800px 600px;
+    /* cursor: pointer; */
+    cursor: url(/assets/reticle.png) 37 37,auto;
+    /* overflow: hidden; */
+    /* opacity: 80%; */
+}
+
+.gameInfo {
+    border: 4px dotted black;
+    border-radius: 105px 105px 0 0;
+    background-color: grey;
+    margin-top: 50px;
+    margin-right: 100px;
+    padding: 0 20px;
+    width: 250px;
+    float: right;
+    text-align: center;
+}
+
+.gameInfo p{
+    position: inherit;
+    color: black;
+    font-size: 20px;
+    width: 100%;
+    top: 10px;
+    margin-left: 0;
+    padding: 5px;
+    opacity: 1;
+}
+
 .start {
     font-family: corpse;
     color: red;
     text-align: center;
     font-size: 30px;
-    margin: 50px 0 20px;
+    margin: 15px 0 10px;
     width: 100px;
     height: 50px;
 }
@@ -96,7 +110,7 @@ audio {
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: 30%;
+    opacity: 20%;
 }
 
 .karen {
@@ -168,6 +182,10 @@ audio {
     width: 200px; 
     height: 217px;
     opacity: 0;
+    cursor: url(/assets/reticle.png) 37 37,auto;
+}
+.time {
+    color: darkred;
 }
 
 #retry {
