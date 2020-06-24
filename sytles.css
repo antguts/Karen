@@ -6,7 +6,7 @@
 
 body {
     background-color: rgb(0,0,0,.5); 
-    background-image: url("/assets/umbrellaCorp.jpg");
+    background-image: url("/assets/karenBG.jpg");
 }
 
 
@@ -129,6 +129,7 @@ audio {
     display: grid;
     position: absolute;
     background-image: url('/assets/finalKaren.png');
+    border-radius: 250px;
     top: 70px;
     width: 250px; 
     height: 300px;

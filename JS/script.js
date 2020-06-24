@@ -84,17 +84,18 @@ function karenShot(element){
     //grab number from id and eliminate the 'karen'
     var currKaren = element.id.match(/\d/g).join('');
     karens[currKaren].hp--
-    //checks HP of Karen
-    if(karens[currKaren].hp<1){
-        count++
-        element.remove()
-        if(count==karens.length) levelChange()
-    }
+    if(karens[currKaren].hp<1)
+        return deadKaren(element,width)        
     gsap.to(`#${element.id}`,{ width:(width-35)})
     gsap.to(`#${element.id}`,{ left:(Math.floor((Math.random()*110)+20))})
-        
-    
 }//end karen shot
+
+
+function deadKaren(element,width){
+    count++
+    element.remove()
+    if(count==karens.length) levelChange()
+}// end deadKaren
 
 // let bossCnt=0
 function bossShot(element){
@@ -111,7 +112,7 @@ function bossShot(element){
         console.log(timeCnt);
         return bossDeath()
     }
-}
+}//end bossShot
 
 
 //ANIMATION=========================================================================================
