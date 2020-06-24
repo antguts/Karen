@@ -29,7 +29,6 @@ h2 {
 }
 
 h3 {
-    /* font-family: corpse; */
     font-size: 35px;
     margin-left: 50px;
     position: absolute;
@@ -39,7 +38,8 @@ h3 {
 }
 
 h4 {
-    font-size: 20px;
+    color: sienna;
+    font-size: 18px;
     margin-bottom: 5px;
 }
 
@@ -62,8 +62,6 @@ p {
     background-size: 800px 600px;
     /* cursor: pointer; */
     cursor: url(/assets/reticle.png) 37 37,auto;
-    /* overflow: hidden; */
-    /* opacity: 80%; */
 }
 
 .gameInfo {
@@ -117,10 +115,10 @@ audio {
     position: absolute;
     top:200px;
     /* Flips the image. first argument to flip horizontally */
-    -moz-transform: scale(-1, 1);
+    /* -moz-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
     -webkit-transform: scale(-1, 1);
-    transform: scale(-1, 1);
+    transform: scale(-1, 1); */
 }
 
 .karenBoss {
@@ -132,7 +130,6 @@ audio {
     width: 250px; 
     height: 300px;
     background-size: 250px 300px;
-    /* margin-left: 150px; */
     left: 350px;
     overflow: hidden;
     opacity: 0;
@@ -153,7 +150,6 @@ audio {
     top: 142px;
     width: 50px; 
     height: 50px;
-    /* margin: 142px 0 0 128px; */
 }
 
 #arnold {
@@ -174,15 +170,14 @@ audio {
     position: absolute;
     text-align: center;
     padding: 10px;
-    background-color: grey;
-    border: 10px groove grey;
+    background-image: url('/assets/winner.png');
+    background-size: 230px 237px;
     top: 88px;
     color: white;
     margin-left: 503px;
-    width: 200px; 
+    width: 210px; 
     height: 217px;
     opacity: 0;
-    cursor: url(/assets/reticle.png) 37 37,auto;
 }
 .time {
     color: darkred;
@@ -194,7 +189,6 @@ audio {
     font-size: 30px;
     color: red;
     left: 60px;
-    /* text-align: center; */
     margin-top: 70px;
     width: 100px;
     height: 50px;

@@ -1,4 +1,4 @@
-//GLOBAL VARIABLES==============================================
+//GLOBAL VARIABLES========================================================================
 const container=document.querySelector('.container')
 const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
@@ -7,6 +7,17 @@ const amountKarens=5
 const karens=[]
 
 
+//TIMERS=========================================================================================
+let time=0
+let timeCnt=0
+let minutes=0
+let seconds=0
+
+function timerOff(time){
+    clearInterval(time)
+    minutes=Math.floor(timeCnt/60)
+    seconds=timeCnt%60
+}
 
 //AUDIO ELEMENTS===========================================================================
 //function to reset innerHTML of audio
@@ -22,6 +33,9 @@ vol('/assets/sounds/menuScreen2.mp3')
 
 startBtn.onclick = () =>{
     document.querySelector('button').disabled=true
+    let time=setInterval(() => { 
+        timeCnt++
+    }, 1000);
     populateKarens()
     animate()
     vol("assets/sounds/zomWave.mp3")
@@ -36,14 +50,14 @@ class Karen {
         this.y=200, //Same TOP CSS position for all.
         this.x=x //To be determined by random assign. Between 60-517
         this.width=width, 
-        this.hp=4, //Hit Points for each Karen
+        this.hp=1, //Hit Points for each Karen
         this.img=img //Image for Karen
     }
 }//end Karen class
 
 let bossKaren={
     img: '/assets/finalKaren.png',
-    hp: 25
+    hp: 2
 }//end boss Karen
 
 
@@ -92,7 +106,11 @@ function bossShot(element){
     karen.style.top=ranY
     bossKaren.hp--
     document.getElementById("lifeCnt").innerHTML=bossKaren.hp
-    if(bossKaren.hp<1) return bossDeath()
+    if(bossKaren.hp<1){ 
+        timerOff(time);
+        console.log(timeCnt);
+        return bossDeath()
+    }
 }
 
 
@@ -132,7 +150,10 @@ function bossCount(){
 
         //Delays the song change until appropriate time
         TweenMax.delayedCall(17,vol,['assets/sounds/finalBoss.mp3'])
-        if(bossKaren.hp<1) return bossDeath()
+        if(bossKaren.hp<1) {
+            timerOff()   
+            return bossDeath()
+        }
 }
 
 //Function that transitions to final boss
@@ -156,7 +177,7 @@ function transitionBg(){
 function bossDeath(){
     // let karen=document.querySelector('.bossKaren')
     container.innerHTML+=`<img src='/assets/thumbUp.png' id="arnold">`
-    document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button><div class="time"><h4>TIME: <span class="timeTotal">11:11</span></h4></div>`
+    document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button><div class="time"><h4>TIME: <span class="timeTotal">${minutes}:${seconds}</span></h4></div>`
 
     new Audio('/assets/sounds/screech.mp3').play();
     gsap.to('.karenBoss',3,{rotation:2000})
