@@ -6,7 +6,7 @@ const audioTag=document.querySelector('audio')
 const bulletSpan=document.querySelector('.bulletCnt span')
 
 //MUTABLE VARIABLES========================================================================
-let bullets=0
+let bullets=1
 let mainMus=''
 let startMus=''
 let bossMus=''
@@ -14,6 +14,7 @@ let victoryMus=''
 let shotSound=''
 let bossShotSound=''
 let bossScreech=''
+let barker=''
 let amountKarens=0
 let karens=[]
 let karenRate=0
@@ -47,8 +48,9 @@ if(confirm("This game contains music and sounds. Press cancel to mute.")){
     bossMus='/assets/sounds/finalBoss.mp3'
     victoryMus='/assets/sounds/victory.mp3'
     shotSound='/assets/sounds/shotHit.mp3'
-    bossShotSound='/assets/sounds/shot.wav'
+    bossShotSound='/assets/sounds/bossHit.mp3'
     bossScreech='/assets/sounds/screech.mp3'
+    barker='/assets/sounds/bobBarker.mp3'
 }
 
 vol(mainMus)
@@ -59,14 +61,14 @@ startBtn.onclick = () =>{
     let time=setInterval(() => { 
         timeCnt++
     }, 1000);
-    container.addEventListener('click',function(){
-        bullets--
-        bulletSpan.innerHTML=bullets
-        if(bullets<0)loss()
-    })
     populateKarens()
     animate()
     vol(startMus)
+    container.addEventListener('click',function(){
+        bullets--
+        bulletSpan.innerHTML=bullets
+        if(bullets<0) loss()
+    })
 } 
 
 function setDif(){
@@ -129,6 +131,7 @@ function populateKarens(){
 //Counter used to track the dead instead of array methods to maintain properties.
 let count=0
 function karenShot(element){
+    bullets++
     let width=element.width
     // console.log(width)
     console.log(count)
@@ -150,6 +153,8 @@ function deadKaren(element,width){
 }// end deadKaren
 
 function bossShot(element){
+    bullets++
+    new Audio(shotSound).play();
     new Audio(bossShotSound).play();
     let karen=document.querySelector('.karenBoss')
     let ranX=Math.floor((Math.random()*510)+80)+'px'
@@ -253,7 +258,18 @@ function movingKarens(karen){
 
 
 function loss(){
-    gsap.to('.container',2,{opacity: 0})
+    gsap.to('audio',{volume:0});
+    new Audio(barker).play();
 
-    console.log('clicked')
+    document.querySelector('.lossBox').innerHTML+=`<p>The cops have shown up. Your picnic is ruined and Karen is sharing a video of you on Instagram</p><button id="retryLoss" onClick="window.location.reload();">Retry</button><img class="copCar" src="/assets/copCar.png">`
+    // // vol('')
+    let tl=new TimelineMax()
+    tl.to('.container',2,{opacity: 0})
+    //   .to('audio',{volume:0})
+      .to('.lossBox p',3,{opacity: 1})
+      .to('#retryLoss',3,{opacity: 1},"-=2.5")
+      .to('.copCar',2,{opacity: 1},"-=4.5")   
+    //   .add(function(){})
+    // console.log('clicked')
+
 }

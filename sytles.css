@@ -232,3 +232,39 @@ select {
     color: white;
     margin-left: 90px;
 }
+
+.copCar {
+    position: absolute;
+    /* left: 246px; */
+    top: 169px;
+    opacity: 0;
+}
+
+.lossBox {
+    position: absolute;
+    top: 78px;
+    left: 248px;
+    color: white;
+    /* background-color: black; */
+    border-radius: 80px;
+    height: 250px;
+    width: 386px;
+}
+.lossBox p {
+    margin-left: 35px;
+    color: white;
+    top: 11px;
+}
+#retryLoss{
+    position: absolute;
+    font-family: corpse;
+    font-size: 30px;
+    color: red;
+    left: 150px;
+    margin-top: 145px;
+    width: 100px;
+    height: 50px;
+    cursor: url(/assets/reticle.png) 37 37,auto;
+    opacity: 0;
+    z-index: 999;
+}
