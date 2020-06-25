@@ -7,9 +7,7 @@
 <p>You are having a nice day at the local park when you feel a dark presence. Screeches suddenly ring out of the woods, filled with the anger
 of a thousand manager requests. As the crys become louder you realize you're surrounded by Karens, not just any Karens.....Zombie Karens!</p>
 
-<b>The goal of this game is to eliminate the wave of Karens by using your mouse to point and shoot. After a certain amount of hits the Karens 
-life will be drained and there will be one less annoyance in the park. Be careful, I hear a super Karen is lurking somewhere and has already 
-gone to Parks and Rec over your picnic.</b>
+<b>The goal of this game is to eliminate the wave of Karens by using your mouse to point and shoot. See how quickly you can make it through the game. Try to improve your times! Be careful though, a super Karen has been seen lurking around somewhere.</b>
 
 <h3>-TECHNOLOGIES-</h3>
 <ul>
