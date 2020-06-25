@@ -3,6 +3,8 @@ const container=document.querySelector('.container')
 const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
+
+
 const amountKarens=5
 const karens=[]
 
@@ -20,6 +22,14 @@ function timerOff(time){
 }
 
 //AUDIO ELEMENTS===========================================================================
+let mainMus=''
+let startMus=''
+let bossMus=''
+let victoryMus=''
+let shotSound=''
+let bossShotSound=''
+let bossScreech=''
+
 //function to reset innerHTML of audio
 let vol= (file) =>{
     audioDiv.innerHTML=`<audio controls loop autoplay>  
@@ -28,8 +38,17 @@ let vol= (file) =>{
     document.querySelector('audio').volume=0.4;
 }
 
+if(confirm("This game contains music and sounds. Press cancel to mute.")){
+    mainMus='/assets/sounds/menuScreen2.mp3'
+    startMus='/assets/sounds/zomWave.mp3'
+    bossMus='/assets/sounds/finalBoss.mp3'
+    victoryMus='/assets/sounds/victory.mp3'
+    shotSound='/assets/sounds/shotHit.mp3'
+    bossShotSound='/assets/sounds/shot.wav'
+    bossScreech='/assets/sounds/screech.mp3'
+}
 
-vol('/assets/sounds/menuScreen2.mp3')
+vol(mainMus)
 
 startBtn.onclick = () =>{
     document.querySelector('button').disabled=true
@@ -38,7 +57,7 @@ startBtn.onclick = () =>{
     }, 1000);
     populateKarens()
     animate()
-    vol("assets/sounds/zomWave.mp3")
+    vol(startMus)
 } 
     
 
@@ -80,7 +99,7 @@ function karenShot(element){
     let width=element.width
     // console.log(width)
     console.log(count)
-    new Audio('/assets/sounds/shot.wav').play();
+    new Audio(shotSound).play();
     //grab number from id and eliminate the 'karen'
     var currKaren = element.id.match(/\d/g).join('');
     karens[currKaren].hp--
@@ -97,9 +116,8 @@ function deadKaren(element,width){
     if(count==karens.length) levelChange()
 }// end deadKaren
 
-// let bossCnt=0
 function bossShot(element){
-    new Audio('/assets/sounds/shot.wav').play();
+    new Audio(bossShotSound).play();
     let karen=document.querySelector('.karenBoss')
     let ranX=Math.floor((Math.random()*510)+80)+'px'
     let ranY=Math.floor((Math.random()*317)+10)+'px'
@@ -115,7 +133,7 @@ function bossShot(element){
 }//end bossShot
 
 
-//ANIMATION=========================================================================================
+//ANIMATION GSAP=========================================================================================
 
 
 //function to set a delay on Zombie Spawn
@@ -125,14 +143,14 @@ function delay(i) {
     }, 1500 * i); 
 }//end delay
 
+//Animate starts on start button click.
 function animate(){
     for(i=0;i<karens.length;i++){
         delay(i)
-        // movingKarens(`karen${i}`)
     }//end for
 }//end animate
 
-//gsap animated level change to boss
+//animated level change to boss
 function levelChange(){
     container.innerHTML+=`<h3>The park darkens as something approaches..</h3><p id="message">(Go for the eyes)</p>`
     container.innerHTML+=`<div class="karenBoss"><div class="leftEye" onclick='bossShot(this)'></div><div class="rightEye"  onclick='bossShot(this)'></div>"</div>`
@@ -150,7 +168,7 @@ function bossCount(){
         }});
 
         //Delays the song change until appropriate time
-        TweenMax.delayedCall(17,vol,['assets/sounds/finalBoss.mp3'])
+        TweenMax.delayedCall(17,vol,[bossMus])
         if(bossKaren.hp<1) {
             timerOff()   
             return bossDeath()
@@ -176,11 +194,10 @@ function transitionBg(){
 }//end funct
 
 function bossDeath(){
-    // let karen=document.querySelector('.bossKaren')
     container.innerHTML+=`<img src='/assets/thumbUp.png' id="arnold">`
     document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button><div class="time"><h4>TIME: <span class="timeTotal">${minutes}:${seconds}</span></h4></div>`
 
-    new Audio('/assets/sounds/screech.mp3').play();
+    new Audio(bossScreech).play();
     gsap.to('.karenBoss',3,{rotation:2000})
     gsap.to('.karenBoss',4,{opacity: 0})
     let tl= new TimelineMax()
@@ -188,10 +205,9 @@ function bossDeath(){
       .to('.karenBoss',4,{backgroundSize:0})
       .to('audio',{duration:3,volume:0},"-=2.5")  
       .to('.square',2,{opacity:1, backgroundImage:'url(assets/victoryPark.png)'})
-      .add(vol('/assets/sounds/victory.mp3'),"+=3")
+      .add(vol(victoryMus),"+=3")
       .to('#arnold',5,{opacity:1})
       .to('.victoryMessage',{opacity:1},"-=3");
-    //   victory()
 
 }//end funct
 

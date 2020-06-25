@@ -196,4 +196,6 @@ audio {
     margin-top: 70px;
     width: 100px;
     height: 50px;
+    cursor: url(/assets/reticle.png) 37 37,auto;
+    z-index: 999;
 }
