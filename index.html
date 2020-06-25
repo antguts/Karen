@@ -17,7 +17,12 @@
     <div class= "gameInfo">
         <h1>Zombie Karens!</h1>
         <p>Eliminate the Zombie Karens as quickly as possible</p>
-        <button class="start">START</button>
+        <button class="start" value="difficulty" onclick="setDif()">START</button>
+        <select name="difficulty" id="difficulty">
+            <option value="1">Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+        </select>
         <!-- Game audio button -->
         <div class="audio"></div>   
     </div>

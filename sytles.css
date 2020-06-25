@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: rgb(0,0,0,.5); 
+    /* background-color: rgb(0,0,0,.5);  */
     background-image: url("/assets/karenBG.jpg");
 }
 
@@ -14,6 +14,7 @@ h1 {
     font-family: corpse;
     font-size: 75px;
     margin-left: 35px;
+    margin-bottom: 5px;
 }
 
 h2 {
@@ -117,6 +118,7 @@ audio {
 .karen {
     position: absolute;
     top:200px;
+    background-size:100px 100px
     /* Flips the image. first argument to flip horizontally */
     /* -moz-transform: scale(-1, 1);
     -o-transform: scale(-1, 1);
@@ -198,4 +200,12 @@ audio {
     height: 50px;
     cursor: url(/assets/reticle.png) 37 37,auto;
     z-index: 999;
+}
+
+select {
+    display: block;
+    width: 30%;
+    background-color: darkred;
+    color: white;
+    margin-left: 105px;
 }

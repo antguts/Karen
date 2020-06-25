@@ -4,10 +4,18 @@ const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
 
-
-const amountKarens=5
-const karens=[]
-
+//MUTABLE VARIABLES========================================================================
+let mainMus=''
+let startMus=''
+let bossMus=''
+let victoryMus=''
+let shotSound=''
+let bossShotSound=''
+let bossScreech=''
+let amountKarens=0
+let karens=[]
+let karenRate=0
+let widthLim=0
 
 //TIMERS=========================================================================================
 let time=0
@@ -21,15 +29,7 @@ function timerOff(time){
     seconds=timeCnt%60
 }
 
-//AUDIO ELEMENTS===========================================================================
-let mainMus=''
-let startMus=''
-let bossMus=''
-let victoryMus=''
-let shotSound=''
-let bossShotSound=''
-let bossScreech=''
-
+//AUDIO AND DIFFICULTY===========================================================================
 //function to reset innerHTML of audio
 let vol= (file) =>{
     audioDiv.innerHTML=`<audio controls loop autoplay>  
@@ -37,7 +37,7 @@ let vol= (file) =>{
                         </audio>`
     document.querySelector('audio').volume=0.4;
 }
-
+//asks user if they would like to mute
 if(confirm("This game contains music and sounds. Press cancel to mute.")){
     mainMus='/assets/sounds/menuScreen2.mp3'
     startMus='/assets/sounds/zomWave.mp3'
@@ -49,9 +49,10 @@ if(confirm("This game contains music and sounds. Press cancel to mute.")){
 }
 
 vol(mainMus)
-
 startBtn.onclick = () =>{
+    setDif()
     document.querySelector('button').disabled=true
+    document.querySelector('select').disabled=true
     let time=setInterval(() => { 
         timeCnt++
     }, 1000);
@@ -59,10 +60,32 @@ startBtn.onclick = () =>{
     animate()
     vol(startMus)
 } 
+
+function setDif(){
+    let mySelect=document.querySelector('#difficulty')
+    let dif=mySelect.options[mySelect.selectedIndex].value; 
+    switch(dif){
+        case '1':
+            karenRate=1500
+            amountKarens=10
+            widthLim=130
+            bossKaren.hp=17
+            break;
+        case '2':
+            karenRate=900
+            amountKarens=20
+            widthLim=90
+            bossKaren.hp=27
+            break;
+        case '3':
+            karenRate=500
+            amountKarens=30
+            widthLim=40
+            bossKaren.hp=35
+            break;
+    }
+}
     
-
-
-
 //KARENS=======================================================================================
 class Karen {
     constructor(x,img,width){
@@ -76,17 +99,15 @@ class Karen {
 
 let bossKaren={
     img: '/assets/finalKaren.png',
-    hp: 2
+    hp: 0
 }//end boss Karen
-
-
 
 function populateKarens(){
     //10 Karens...
     for(i=0;i<amountKarens;i++){
         let ranIm='zom'+Math.floor((Math.random()*2)+1)+'.png'
         let ranX=Math.floor((Math.random()*635)+10)
-        let ranWidth=Math.floor((Math.random()*50)+135)
+        let ranWidth=Math.floor((Math.random()*40)+widthLim)
         let karen=new Karen(ranX,ranIm,ranWidth)
         karens.push(karen)
     }
@@ -132,15 +153,12 @@ function bossShot(element){
     }
 }//end bossShot
 
-
 //ANIMATION GSAP=========================================================================================
-
-
 //function to set a delay on Zombie Spawn
 function delay(i) { 
     setTimeout(function() { 
         container.innerHTML+=`<img src="/assets/${karens[i].img}" class="karen" id="karen${i}" style="width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
-    }, 1500 * i); 
+    }, karenRate * i); 
 }//end delay
 
 //Animate starts on start button click.
@@ -208,7 +226,6 @@ function bossDeath(){
       .add(vol(victoryMus),"+=3")
       .to('#arnold',5,{opacity:1})
       .to('.victoryMessage',{opacity:1},"-=3");
-
 }//end funct
 
 function movingKarens(karen){
