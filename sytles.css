@@ -97,6 +97,14 @@ p {
     opacity: 1;
 }
 
+.bulletCnt {
+    margin-top: 15px;
+    font-family: corpse;
+    font-size: 20px;
+}
+
+
+
 .start {
     font-family: corpse;
     color: red;
@@ -242,6 +250,7 @@ select {
 
 .lossBox {
     position: absolute;
+    display: none;
     top: 78px;
     left: 248px;
     color: white;
@@ -249,6 +258,7 @@ select {
     border-radius: 80px;
     height: 250px;
     width: 386px;
+    z-index: 999;
 }
 .lossBox p {
     margin-left: 35px;

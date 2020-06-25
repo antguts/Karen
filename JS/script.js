@@ -4,6 +4,7 @@ const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
 const bulletSpan=document.querySelector('.bulletCnt span')
+const lossBox=document.querySelector('.lossBox')
 
 //MUTABLE VARIABLES========================================================================
 let bullets=1
@@ -19,6 +20,7 @@ let amountKarens=0
 let karens=[]
 let karenRate=0
 let widthLim=0
+let priceFail=''
 
 //TIMERS=========================================================================================
 let time=0
@@ -51,7 +53,9 @@ if(confirm("This game contains music and sounds. Press cancel to mute.")){
     bossShotSound='/assets/sounds/bossHit.mp3'
     bossScreech='/assets/sounds/screech.mp3'
     barker='/assets/sounds/bobBarker.mp3'
+    priceFail='assets/sounds/priceRightFail.mp3'
 }
+
 
 vol(mainMus)
 startBtn.onclick = () =>{
@@ -64,11 +68,7 @@ startBtn.onclick = () =>{
     populateKarens()
     animate()
     vol(startMus)
-    container.addEventListener('click',function(){
-        bullets--
-        bulletSpan.innerHTML=bullets
-        if(bullets<0) loss()
-    })
+    container.addEventListener('click',mouseListen)
 } 
 
 function setDif(){
@@ -98,6 +98,12 @@ function setDif(){
     }
     bulletSpan.innerHTML=bullets
 }
+function mouseListen(){
+    bullets--
+    bulletSpan.innerHTML=bullets
+    if(bullets<0)return loss()
+}
+
     
 //KARENS=======================================================================================
 class Karen {
@@ -133,8 +139,6 @@ let count=0
 function karenShot(element){
     bullets++
     let width=element.width
-    // console.log(width)
-    console.log(count)
     new Audio(shotSound).play();
     //grab number from id and eliminate the 'karen'
     var currKaren = element.id.match(/\d/g).join('');
@@ -165,7 +169,6 @@ function bossShot(element){
     document.getElementById("lifeCnt").innerHTML=bossKaren.hp
     if(bossKaren.hp<1){ 
         timerOff(time);
-        console.log(timeCnt);
         return bossDeath()
     }
 }//end bossShot
@@ -251,25 +254,19 @@ function bossDeath(){
 function movingKarens(karen){
     let tl= new TimelineMax()
     tl.to(karen,20,{rotation:50})
-    console.log('test')
 }//end funct
 
-
-
-
 function loss(){
+    container.removeEventListener('click',mouseListen)
     gsap.to('audio',{volume:0});
-    new Audio(barker).play();
-
-    document.querySelector('.lossBox').innerHTML+=`<p>The cops have shown up. Your picnic is ruined and Karen is sharing a video of you on Instagram</p><button id="retryLoss" onClick="window.location.reload();">Retry</button><img class="copCar" src="/assets/copCar.png">`
-    // // vol('')
+    new Audio(priceFail).play();
+    lossBox.style.display='block'
+    lossBox.innerHTML+=`<p>The cops have shown up. Your picnic is ruined and Karen is sharing a video of you on Instagram</p><button id="retryLoss" onClick="window.location.reload();">Retry</button><img class="copCar" src="/assets/copCar.png">`
     let tl=new TimelineMax()
     tl.to('.container',2,{opacity: 0})
-    //   .to('audio',{volume:0})
       .to('.lossBox p',3,{opacity: 1})
       .to('#retryLoss',3,{opacity: 1},"-=2.5")
+      .add(function(){new Audio(barker).play();},"-=2")
       .to('.copCar',2,{opacity: 1},"-=4.5")   
-    //   .add(function(){})
-    // console.log('clicked')
 
 }
