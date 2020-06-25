@@ -9,6 +9,12 @@ body {
     background-image: url("/assets/karenBG.jpg");
 }
 
+ul {
+    text-decoration: wavy;
+    width: 202px;
+    margin-top: 45px;
+    margin-left: 35px;
+}
 
 h1 {
     font-family: corpse;
@@ -105,6 +111,7 @@ audio {
     color: black;
     margin: 20px 0 0 30px;
     width: 200px;
+    height: 20px;
 }
 
 /* Square covers park with full opacity to dim lighting when wave starts */
@@ -117,7 +124,7 @@ audio {
 
 .karen {
     position: absolute;
-    top:200px;
+    /* top:200px; */
     background-size:100px 100px;
     transition: all 2s;
     /* transform: scaleX(0) rotate(0); */
@@ -146,7 +153,7 @@ audio {
     content:"";
     display: grid;
     position: absolute;
-    background-image: url('/assets/finalKaren.png');
+    background-image: url('/assets/boss.png');
     border-radius: 250px;
     top: 70px;
     width: 250px; 
@@ -160,18 +167,18 @@ audio {
 /* Create divs inside boss karen for user to target eyes instead of entire div */
 .leftEye {
     position: inherit;
-    right: 50%;
-    top: 142px;
+    right: 59%;
+    top: 101px;
     width: 50px; 
-    height: 50px;
+    height: 32px;
 
 }
 .rightEye {
     position: inherit;
-    right: 28%;
-    top: 142px;
+    right: 33%;
+    top: 90px;
     width: 50px; 
-    height: 50px;
+    height: 37px;
 }
 
 #arnold {
@@ -220,8 +227,8 @@ audio {
 
 select {
     display: block;
-    width: 30%;
+    width: 40%;
     background-color: darkred;
     color: white;
-    margin-left: 105px;
+    margin-left: 90px;
 }

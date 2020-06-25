@@ -3,8 +3,10 @@ const container=document.querySelector('.container')
 const startBtn=document.querySelector('.start')
 const audioDiv=document.querySelector('.audio')
 const audioTag=document.querySelector('audio')
+const bulletSpan=document.querySelector('.bulletCnt span')
 
 //MUTABLE VARIABLES========================================================================
+let bullets=0
 let mainMus=''
 let startMus=''
 let bossMus=''
@@ -26,7 +28,8 @@ let seconds=0
 function timerOff(time){
     clearInterval(time)
     minutes=Math.floor(timeCnt/60)
-    seconds=timeCnt%60
+    seconds=timeCnt%60;
+    if(seconds<10)seconds='0'+seconds;
 }
 
 //AUDIO AND DIFFICULTY===========================================================================
@@ -56,6 +59,11 @@ startBtn.onclick = () =>{
     let time=setInterval(() => { 
         timeCnt++
     }, 1000);
+    container.addEventListener('click',function(){
+        bullets--
+        bulletSpan.innerHTML=bullets
+        if(bullets<0)loss()
+    })
     populateKarens()
     animate()
     vol(startMus)
@@ -67,29 +75,32 @@ function setDif(){
     switch(dif){
         case '1':
             karenRate=1500
-            amountKarens=3
-            widthLim=130
+            amountKarens=10
             bossKaren.hp=17
+            bullets=6
+            widthLim=110
             break;
         case '2':
             karenRate=900
             amountKarens=20
-            widthLim=90
             bossKaren.hp=27
+            bullets=3
+            widthLim=50
             break;
         case '3':
             karenRate=500
             amountKarens=30
-            widthLim=40
             bossKaren.hp=35
+            widthLim=30
             break;
     }
+    bulletSpan.innerHTML=bullets
 }
     
 //KARENS=======================================================================================
 class Karen {
-    constructor(x,img,width){
-        this.y=200, //Same TOP CSS position for all.
+    constructor(x,img,width,y){
+        this.y=y, //Same TOP CSS position for all.
         this.x=x //To be determined by random assign. Between 60-517
         this.width=width, 
         this.hp=1, //Hit Points for each Karen
@@ -98,17 +109,18 @@ class Karen {
 }//end Karen class
 
 let bossKaren={
-    img: '/assets/finalKaren.png',
+    img: '/assets/boss.png',
     hp: 0
 }//end boss Karen
 
 function populateKarens(){
     //10 Karens...
     for(i=0;i<amountKarens;i++){
-        let ranIm='zom'+Math.floor((Math.random()*2)+1)+'.png'
+        let ranY=Math.floor((Math.random()*317)+10)
+        let ranIm='kar'+Math.floor((Math.random()*5)+1)+'.png'
         let ranX=Math.floor((Math.random()*635)+10)
         let ranWidth=Math.floor((Math.random()*40)+widthLim)
-        let karen=new Karen(ranX,ranIm,ranWidth)
+        let karen=new Karen(ranX,ranIm,ranWidth,ranY)
         karens.push(karen)
     }
 }//end funct
@@ -157,7 +169,7 @@ function bossShot(element){
 //function to set a delay on Zombie Spawn
 function delay(i) { 
     setTimeout(function() { 
-        container.innerHTML+=`<img src="/assets/${karens[i].img}" class="karen" id="karen${i}" style="width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
+        container.innerHTML+=`<img src="/assets/${karens[i].img}" class="karen" id="karen${i}" style="top:${karens[i].y}px;width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
         setTimeout(function(){//increases karen width after spawn
             document.querySelector(`#karen${i}`).style.width = (karens[i].width+=80)+'px'
         }, 100)
@@ -236,3 +248,12 @@ function movingKarens(karen){
     tl.to(karen,20,{rotation:50})
     console.log('test')
 }//end funct
+
+
+
+
+function loss(){
+    gsap.to('.container',2,{opacity: 0})
+
+    console.log('clicked')
+}
