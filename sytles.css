@@ -118,12 +118,28 @@ audio {
 .karen {
     position: absolute;
     top:200px;
-    background-size:100px 100px
-    /* Flips the image. first argument to flip horizontally */
-    /* -moz-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    transform: scale(-1, 1); */
+    background-size:100px 100px;
+    transition: all 2s;
+    /* transform: scaleX(0) rotate(0); */
+    /* animation: walk 3s forwards; */
+    /* animation-iteration-count: 1; */
+}
+
+.walk {
+    top:300px;
+    transform: scaleX(-1) rotate(20deg);
+    /* width: */
+}
+
+@keyframes walk{
+    100%{ 
+        top:300px;
+        transform: scaleX(-1) rotate(20deg);
+    }
+    50%{
+        top:200px;
+        transform: rotate(-20deg);
+    }
 }
 
 .karenBoss {

@@ -67,7 +67,7 @@ function setDif(){
     switch(dif){
         case '1':
             karenRate=1500
-            amountKarens=10
+            amountKarens=3
             widthLim=130
             bossKaren.hp=17
             break;
@@ -158,6 +158,9 @@ function bossShot(element){
 function delay(i) { 
     setTimeout(function() { 
         container.innerHTML+=`<img src="/assets/${karens[i].img}" class="karen" id="karen${i}" style="width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
+        setTimeout(function(){//increases karen width after spawn
+            document.querySelector(`#karen${i}`).style.width = (karens[i].width+=80)+'px'
+        }, 100)
     }, karenRate * i); 
 }//end delay
 
