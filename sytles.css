@@ -69,7 +69,7 @@ p {
     background-image: url("./assets/parkBG.jpg");
     background-size: 800px 600px;
     /* cursor: pointer; */
-    cursor: url(/assets/reticle.png) 37 37,auto;
+    cursor: url(./assets/reticle.png) 37 37,auto;
 }
 
 .gameInfo {
