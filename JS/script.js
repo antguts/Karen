@@ -7,7 +7,7 @@ const bulletSpan=document.querySelector('.bulletCnt span')
 const lossBox=document.querySelector('.lossBox')
 
 //MUTABLE VARIABLES========================================================================
-let bullets=1
+let bullets=0
 let mainMus=''
 let startMus=''
 let bossMus=''
@@ -41,18 +41,18 @@ let vol= (file) =>{
     audioDiv.innerHTML=`<audio controls loop autoplay>  
                         <source src="${file}" type="audio/mpeg">
                         </audio>`
-    document.querySelector('audio').volume=0.4;
+    document.querySelector('audio').volume=0.3;
 }
 //asks user if they would like to mute
 if(confirm("This game contains music and sounds. Press cancel to mute.")){
-    mainMus='/assets/sounds/menuScreen2.mp3'
-    startMus='/assets/sounds/zomWave.mp3'
-    bossMus='/assets/sounds/finalBoss.mp3'
-    victoryMus='/assets/sounds/victory.mp3'
-    shotSound='/assets/sounds/shotHit.mp3'
-    bossShotSound='/assets/sounds/bossHit.mp3'
-    bossScreech='/assets/sounds/screech.mp3'
-    barker='/assets/sounds/bobBarker.mp3'
+    mainMus='./assets/sounds/menuScreen2.mp3'
+    startMus='./assets/sounds/zomWave.mp3'
+    bossMus='./assets/sounds/finalBoss.mp3'
+    victoryMus='./assets/sounds/victory.mp3'
+    shotSound='./assets/sounds/shot.mp3'
+    bossShotSound='./assets/sounds/bossHit.mp3'
+    bossScreech='./assets/sounds/screech.mp3'
+    barker='./assets/sounds/bobBarker.mp3'
     priceFail='assets/sounds/priceRightFail.mp3'
 }
 
@@ -99,6 +99,7 @@ function setDif(){
     bulletSpan.innerHTML=bullets
 }
 function mouseListen(){
+    new Audio(shotSound).play();
     bullets--
     bulletSpan.innerHTML=bullets
     if(bullets<0)return loss()
@@ -117,16 +118,16 @@ class Karen {
 }//end Karen class
 
 let bossKaren={
-    img: '/assets/boss.png',
+    img: './assets/boss.png',
     hp: 0
 }//end boss Karen
 
 function populateKarens(){
     //10 Karens...
     for(i=0;i<amountKarens;i++){
-        let ranY=Math.floor((Math.random()*317)+10)
+        let ranY=Math.floor((Math.random()*420)+10)
         let ranIm='kar'+Math.floor((Math.random()*5)+1)+'.png'
-        let ranX=Math.floor((Math.random()*635)+10)
+        let ranX=Math.floor((Math.random()*605)+10)
         let ranWidth=Math.floor((Math.random()*40)+widthLim)
         let karen=new Karen(ranX,ranIm,ranWidth,ranY)
         karens.push(karen)
@@ -139,7 +140,7 @@ let count=0
 function karenShot(element){
     bullets++
     let width=element.width
-    new Audio(shotSound).play();
+    // new Audio(shotSound).play();
     //grab number from id and eliminate the 'karen'
     var currKaren = element.id.match(/\d/g).join('');
     karens[currKaren].hp--
@@ -232,16 +233,16 @@ function transitionBg(){
       .to('.karenBoss',{opacity: 1, duration: 0.2})
       .to('.karenBoss',{opacity: 0, duration: 0.1})
       .to('.karenBoss',{opacity: 1, duration: 0.2});
-}//end funct
+}//end transitionBg
 
 function bossDeath(){
-    container.innerHTML+=`<img src='/assets/thumbUp.png' id="arnold">`
+    let tl= new TimelineMax()
+    container.innerHTML+=`<img src='./assets/thumbUp.png' id="arnold">`
     document.querySelector('.victoryMessage').innerHTML=`<h4>CONGRATULATIONS</h4><hr><span id="victory">Arnold thanks you for keeping our parks safe</span><button id="retry" onClick="window.location.reload();">Retry</button><div class="time"><h4>TIME: <span class="timeTotal">${minutes}:${seconds}</span></h4></div>`
 
     new Audio(bossScreech).play();
     gsap.to('.karenBoss',3,{rotation:2000})
     gsap.to('.karenBoss',4,{opacity: 0})
-    let tl= new TimelineMax()
     tl.to('h2',{display:'none'})  
       .to('.karenBoss',4,{backgroundSize:0})
       .to('audio',{duration:3,volume:0},"-=2.5")  
@@ -249,12 +250,8 @@ function bossDeath(){
       .add(vol(victoryMus),"+=3")
       .to('#arnold',5,{opacity:1})
       .to('.victoryMessage',{opacity:1},"-=3");
-}//end funct
+}//end bossDeath
 
-function movingKarens(karen){
-    let tl= new TimelineMax()
-    tl.to(karen,20,{rotation:50})
-}//end funct
 
 function loss(){
     container.removeEventListener('click',mouseListen)
@@ -270,3 +267,5 @@ function loss(){
       .to('.copCar',2,{opacity: 1},"-=4.5")   
 
 }
+
+

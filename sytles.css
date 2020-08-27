@@ -6,7 +6,7 @@
 
 body {
     /* background-color: rgb(0,0,0,.5);  */
-    background-image: url("/assets/karenBG.jpg");
+    background-image: url("./assets/karenBG.jpg");
 }
 
 ul {
@@ -66,7 +66,7 @@ p {
     margin-left: 50px;
     height:600px;
     width: 800px;
-    background-image: url("/assets/parkBG.jpg");
+    background-image: url("./assets/parkBG.jpg");
     background-size: 800px 600px;
     /* cursor: pointer; */
     cursor: url(/assets/reticle.png) 37 37,auto;
@@ -75,7 +75,7 @@ p {
 .gameInfo {
     /* border: 4px dotted black; */
     /* background-color: grey; */
-    background-image: url('/assets/tombstone.png');
+    background-image: url('./assets/tombstone.png');
     background-size: 340px 520px;
     border-radius: 105px 105px 0 0;
     margin-top: 50px;
@@ -161,7 +161,7 @@ audio {
     content:"";
     display: grid;
     position: absolute;
-    background-image: url('/assets/boss.png');
+    background-image: url('./assets/boss.png');
     border-radius: 250px;
     top: 70px;
     width: 250px; 
@@ -207,7 +207,7 @@ audio {
     position: absolute;
     text-align: center;
     padding: 10px;
-    background-image: url('/assets/winner.png');
+    background-image: url('./assets/winner.png');
     background-size: 230px 237px;
     top: 88px;
     color: white;
