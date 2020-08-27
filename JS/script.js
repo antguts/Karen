@@ -178,7 +178,7 @@ function bossShot(element){
 //function to set a delay on Zombie Spawn
 function delay(i) { 
     setTimeout(function() { 
-        container.innerHTML+=`<img src="/assets/${karens[i].img}" class="karen" id="karen${i}" style="top:${karens[i].y}px;width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
+        container.innerHTML+=`<img src="./assets/${karens[i].img}" class="karen" id="karen${i}" style="top:${karens[i].y}px;width:${karens[i].width}px; margin-left:${karens[i].x}px;" onclick='karenShot(this)'>`;
         setTimeout(function(){//increases karen width after spawn
             document.querySelector(`#karen${i}`).style.width = (karens[i].width+=80)+'px'
         }, 100)
