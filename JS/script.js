@@ -258,7 +258,7 @@ function loss(){
     gsap.to('audio',{volume:0});
     new Audio(priceFail).play();
     lossBox.style.display='block'
-    lossBox.innerHTML+=`<p>The cops have shown up. Your picnic is ruined and Karen is sharing a video of you on Instagram</p><button id="retryLoss" onClick="window.location.reload();">Retry</button><img class="copCar" src="/assets/copCar.png">`
+    lossBox.innerHTML+=`<p>The cops have shown up. Your picnic is ruined and Karen is sharing a video of you on Instagram</p><button id="retryLoss" onClick="window.location.reload();">Retry</button><img class="copCar" src="./assets/copCar.png">`
     let tl=new TimelineMax()
     tl.to('.container',2,{opacity: 0})
       .to('.lossBox p',3,{opacity: 1})
